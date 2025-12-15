@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capstone-consumer
+  namespace: capstone
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: capstone-consumer
+  template:
+    metadata:
+      labels:
+        app: capstone-consumer
+    spec:
+      containers:
+        - name: consumer
+          image: ghcr.io/YOUR_GITHUB_USER/capstone-consumer:latest
+          env:
+            - name: KAFKA_BOOTSTRAP
+              value: "kafka:9092"
+            - name: KAFKA_TOPIC
+              value: "events"
+            - name: KAFKA_GROUP
+              value: "capstone-consumers"
