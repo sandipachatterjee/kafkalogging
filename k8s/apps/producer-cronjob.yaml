@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: capstone-producer
+  namespace: capstone
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: producer
+              image: ghcr.io/YOUR_GITHUB_USER/capstone-producer:latest
+              env:
+                - name: KAFKA_BOOTSTRAP
+                  value: "kafka:9092"
+                - name: KAFKA_TOPIC
+                  value: "events"
